@@ -6,6 +6,10 @@ use Codexshaper\WooCommerce\Facades\Webhook;
 use Codexshaper\WooCommerce\Facades\Report;
 use Codexshaper\WooCommerce\Facades\WooCommerce;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SugerenciaEmail;
+use Symfony\Component\HttpFoundation\Response;
+
 use Illuminate\Http\Request;
 
 
@@ -22,11 +26,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    // $options = [
-    //     'per_page' => 50 // Or your desire number
-    // ];
-    // $products = Product::all($options);
-
+    return csrf_token();
 
 });
 
@@ -50,4 +50,27 @@ Route::get('/busqueda-name', function (Request $request) {
     // dd($product);
 
     return $product;
+});
+
+
+Route::post('/enviar-mensaje', function (Request $request) {
+
+    $nombre = $request->get('nombre');
+    $correo = $request->get('correo');
+    $telefono = $request->get('telefono');
+    $sugerencia =  $request->get('sugerencia');
+
+    $mailData = [
+        'nombre' => $nombre,
+        'correo' => $correo,
+        'telefono' => $telefono,
+        'sugerencia' => $sugerencia,
+    ];
+
+    //Enviar correo
+    Mail::to('alfredogalvan.91@gmail.com')->send(new SugerenciaEmail($mailData));
+
+    return response()->json([
+        'message' => 'Success'
+    ], Response::HTTP_OK);
 });
