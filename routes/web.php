@@ -1,5 +1,6 @@
 <?php
 
+use App\Imports\ProductosImport;
 use Illuminate\Support\Facades\Route;
 use Codexshaper\WooCommerce\Facades\Product;
 use Codexshaper\WooCommerce\Facades\Webhook;
@@ -8,11 +9,13 @@ use Codexshaper\WooCommerce\Facades\WooCommerce;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SugerenciaEmail;
+use App\Models\Producto;
 use Symfony\Component\HttpFoundation\Response;
 
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
-
+use function PHPUnit\Framework\isEmpty;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,16 +29,37 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return csrf_token();
-
+    $datos = Producto::all();
+    $fecha = Producto::first();
+    return view('importar', compact('datos', 'fecha'));
 });
+
+Route::post('/eliminar', function () {
+    Producto::truncate();
+    return redirect()->back()->with('success', 'La información se eliminó correctamente');
+})->name('eliminar.productos');
+
+Route::post('/importar', function (Request $request) {
+    $item = $request->file('file');
+
+    Excel::import(new ProductosImport, $item);
+    return redirect()->back()->with('success', 'La información se importo de forma correcta.');
+})->name('productos.importar');
 
 
   //busqueda por SKU - ej, 823134
 Route::get('/busqueda-sku', function (Request $request) {
 
-    $product = Product::where('sku', $request->get('sku'))->get();
-    return $product;
+    $sku = $request->get('sku');
+
+
+    $producto = Producto::where('sku', '=', $sku)->get();
+
+    return $producto;
+
+
+    // $product = Product::where('sku', $request->get('sku'))->get();
+    // return $product;
 });
 
 
