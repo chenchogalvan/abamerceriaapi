@@ -65,11 +65,11 @@ Route::get('/busqueda-sku', function (Request $request) {
 
 Route::get('/busqueda-name', function (Request $request) {
     //busqueda por SKU - ej, 823134
-    $options = [
-        'per_page' => 50 // Or your desire number
-    ];
+    // $options = [
+    //     'per_page' => 50 // Or your desire number
+    // ];
 
-    $product = Product::where('name', 'LIKE', '% '.$request->get('name').' %')->first();
+    $product = Producto::where('desc', 'LIKE', '% '.$request->get('name').' %')->get();
 
     // dd($product);
 
