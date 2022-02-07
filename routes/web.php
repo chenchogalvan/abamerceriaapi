@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\ProductosExport;
 use App\Imports\ProductosImport;
 use Illuminate\Support\Facades\Route;
 use Codexshaper\WooCommerce\Facades\Product;
@@ -38,6 +39,11 @@ Route::post('/eliminar', function () {
     Producto::truncate();
     return redirect()->back()->with('success', 'La información se eliminó correctamente');
 })->name('eliminar.productos');
+
+
+Route::get('/exportar-datos', function(){
+    return Excel::download(new ProductosExport, 'productos-aplicacion.xlsx');
+})->name('exportar.productos');
 
 Route::post('/importar', function (Request $request) {
     $item = $request->file('file');

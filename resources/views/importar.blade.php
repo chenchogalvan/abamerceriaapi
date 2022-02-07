@@ -76,11 +76,11 @@
                                         <path fill-rule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clip-rule="evenodd" />
                                         </svg>
                                         <span class="ml-2 flex-1 w-0 truncate text-gray-50">
-                                        productos-aplicacion.pdf
+                                        productos-aplicacion.xlsx
                                         </span>
                                     </div>
                                     <div class="ml-4 flex-shrink-0">
-                                        <button class="dark:bg-violet-900 p-2 pl-4 pr-4 rounded-lg dark:hover:bg-violet-700 dark:text-slate-50 transition dark:disabled:opacity-75 disabled:opacity-75">Descargar archivo</button>
+                                        <a href="{{ route('exportar.productos') }}" class="dark:bg-violet-900 p-2 pl-4 pr-4 rounded-lg dark:hover:bg-violet-700 dark:text-slate-50 transition dark:disabled:opacity-75 disabled:opacity-75">Descargar archivo</a>
                                     </div>
                                     </li>
                                 </ul>
@@ -94,7 +94,7 @@
                                 <p class="pb-4">Antes de eliminar la carga, es recomendable descargar el archivo actual para cualquier eventualidad. Una vez hecho, puedes proceder a eliminar dando clic en el siguiente boton:</p>
                                 <form action="{{ route('eliminar.productos') }}" method="post">
                                     @csrf
-                                    <button class="dark:bg-violet-900 p-2 pl-4 pr-4 rounded-lg dark:hover:bg-violet-700 dark:text-slate-50 transition dark:disabled:opacity-75 disabled:opacity-75" onclick="confirm('¿Estas seguro que deseas eliminar la información?')">Eliminar información de la base de datos<button>
+                                    <button class="dark:bg-violet-900 p-2 pl-4 pr-4 rounded-lg dark:hover:bg-violet-700 dark:text-slate-50 transition dark:disabled:opacity-75 disabled:opacity-75" onclick="return confirm('¿Estas seguro que deseas eliminar la información?')">Eliminar información de la base de datos y cargar información actualizada <button>
                                 </form>
                             </dd>
                         </div>
