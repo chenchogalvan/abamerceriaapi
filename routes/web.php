@@ -69,7 +69,7 @@ Route::get('/busqueda-name', function (Request $request) {
         'per_page' => 50 // Or your desire number
     ];
 
-    $product = Product::where('name', 'LIKE', '% '.$request->get('name').' %')->get();
+    $product = Product::where('name', 'LIKE', '% '.$request->get('name').' %')->first();
 
     // dd($product);
 
