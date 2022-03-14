@@ -25,7 +25,8 @@ class ProductosImport implements ToModel
             'tamano' => $row[6],
             'colores' => $row[7],
             'unidad' => $row[8],
-            'empaque' => $row[9]
+            'empaque' => $row[9],
+            'sku_prove' => $row[10]
         ]);
     }
 }

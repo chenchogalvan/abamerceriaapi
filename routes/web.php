@@ -56,12 +56,19 @@ Route::post('/importar', function (Request $request) {
   //busqueda por SKU - ej, 823134
 Route::get('/busqueda-sku', function (Request $request) {
 
+
     $sku = $request->get('sku');
 
 
     $producto = Producto::where('sku', '=', $sku)->get();
+    if ($producto->isEmpty()) {
+        $producto = Producto::where('sku_prove', '=', $sku)->get();
+        return $producto;
+    }else{
+        return $producto;
+    }
 
-    return $producto;
+
 
 
     // $product = Product::where('sku', $request->get('sku'))->get();
@@ -81,6 +88,16 @@ Route::get('/busqueda-name', function (Request $request) {
 
     return $product;
 });
+
+
+// Route::get('/prueba', function(){
+
+//     return view('prueba');
+// });
+
+// Route::post('/prueba-post', function(Request $request){
+//     return $request->all();
+// })->name('prueba.post');
 
 
 Route::post('/enviar-mensaje', function (Request $request) {

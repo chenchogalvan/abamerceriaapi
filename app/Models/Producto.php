@@ -20,7 +20,8 @@ class Producto extends Model
         'tamano',
         'colores',
         'unidad',
-        'empaque'
+        'empaque',
+        'sku_prove'
     ];
 
     protected $casts = [
